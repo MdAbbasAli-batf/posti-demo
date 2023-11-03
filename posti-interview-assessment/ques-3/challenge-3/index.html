@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+        body {
+            background: rgba(213, 220, 240, 0.516) }
+        section {
+            background: rgb(28, 40, 80);
+            color: rgb(255, 255, 255);
+            border-radius: 1em;
+            padding: 1em;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-right: -50%;
+            transform: translate(-50%, -50%) }
+</style>
+<head>
+        <meta charset="UTF-8" />
+        <title>POSTI DEMO</title>
+</head>
+
+<body>
+        <section>
+        <form>
+                <div>
+                        <label>FirstName</label>
+                        <input type="text" id="firstname" />
+                </div>
+                <div>
+                        <label>LastName</label>
+                        <input type="text" id="lastname" />
+                </div>
+                <div align="center">
+                <button type="submit" style="color:blue;"><b>Submit</b></button>
+                </div>
+        </form>
+        <div id="resData"></div>
+        </section>
+
+        <script>
+                document.querySelector('button')
+                        .addEventListener('click', (e) => {
+                                e.preventDefault();
+                                const firstName = document
+                                        .querySelector('#firstname').value;
+
+                                const lastName = document
+                                        .querySelector('#lastname').value;
+
+                                fetch('https://447r3f8k3l.execute-api.eu-central-1.amazonaws.com/posti/posti-demo', {
+                                        method: 'POST',
+                                        headers: {
+                                                Authorization: 'Bearer abcdxyz',
+                                                'Access-Control-Allow-Origin': '*',
+                                                'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify({
+                                                firstName,
+                                                lastName,
+                                        }),
+                                })
+                                        .then(function (response) {
+                                            return response.json();
+                                        })
+                                        .then(function (data) {
+                                            appendData(data);
+                                        })
+                                        .catch(function (err) {
+                                            console.log('error: ' + err);
+                                        });
+                                        function appendData(data) {
+                                            var mainContainer = document.getElementById("resData");
+                                            var div = document.createElement("div");
+                                            div.innerHTML = 'Hi! ' + data.body.firstName + ' ' + data.body.lastName + ',   ' + data.body.message;
+                                            mainContainer.appendChild(div);
+                                        }
+                        });
+        </script>
+        
+</body>
+
+</html>

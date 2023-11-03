@@ -1,0 +1,24 @@
+#docker compose up -d --no-deps --build
+services:
+  webapp:
+    build:
+      context: "."
+      dockerfile: webapp.Dockerfile
+      tags:
+        - "posti-web:v1"
+    ports:
+      - 8011:80
+
+  monitor:
+    build:
+      context: "."
+      dockerfile: monitor.Dockerfile
+      tags:
+        - "posti-web-monitor:v1"
+    volumes: 
+      - /tmp:/tmp
+    environment:
+      WEBAPP_HOST: webapp
+
+
+

@@ -1,0 +1,17 @@
+export const handler = async (event) => {
+  // TODO implement
+  const f_Name = String(event.firstName).toUpperCase( )
+  const l_Name = String(event.lastName).toUpperCase( )
+  let responseBody = {
+            message: "hello from AWS Lambda behind API Gateway",
+            firstName: f_Name,
+            lastName: l_Name
+        };
+  const response = {
+    statusCode: 200,
+    headers: {"content-type": "application/json"},
+    body: responseBody,
+  };
+
+  return response;
+};
